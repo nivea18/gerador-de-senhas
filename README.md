@@ -14,4 +14,4 @@ Projeto de uma API Fullstack com React (Vite) e Python (FastAPI)
 ## Como rodar o Frontend
 1. Entrem na pasta: `cd frontend`
 2. Instalem as dependências: `npm install`
-3. Rodem o projeto: `npm run dev`
+3. Rodem o projeto: `npm run dev
