@@ -1,4 +1,4 @@
-#Aqui vai ficar todos os models referente ao usuario
+#Aqui vai ficar todos os models referente ao USUARIO
 
 from config.database import conectar
 from mysql.connector import Error
@@ -23,6 +23,10 @@ def search_user_for_email(email):
                 'success': False,
                 'message': f"Houve um error ao realizar a Query: {erro}",              
             }
+        
+        finally:
+            cursor.close()
+            conexao.close()
 
 def search_user_for_id(id):
     conexao, cursor = conectar()
@@ -44,6 +48,10 @@ def search_user_for_id(id):
                 'success': False,
                 'message': f"Houve um error ao realizar a Query: {erro}",              
             }
+        
+        finally:
+            cursor.close()
+            conexao.close()
 
 def create_new_user(dados):
     conexao, cursor = conectar()
@@ -53,7 +61,7 @@ def create_new_user(dados):
             cursor.execute(sql, (dados["nome"], dados["email"], dados["senha_hash"]))
             conexao.commit()
 
-            print(f"User criado com sucesso. {cursor.lastrowid}")
+            print(f"User criado com sucesso. ID: {cursor.lastrowid}")
             return {
                 'success': True, 
                 'message': f"Usuário {cursor.lastrowid} criado com sucesso"
@@ -63,6 +71,10 @@ def create_new_user(dados):
                 'success': False, 
                 'message': f"Houve um error ao realizar a Query: {erro}"
             }
+        
+        finally:
+            cursor.close()
+            conexao.close()
 
 def delete_user(id):
     conexao, cursor = conectar()
@@ -84,6 +96,10 @@ def delete_user(id):
                     'success': False, 
                     'message': f"Houve um error ao realizar a Query: {erro}"
                 }
+        
+        finally:
+            cursor.close()
+            conexao.close()
 
 def update_username(id, nome):
     conexao, cursor = conectar()
@@ -105,3 +121,7 @@ def update_username(id, nome):
                     'success': False, 
                     'message': f"Houve um error ao realizar a Query: {erro}"
                 }
+        
+        finally:
+            cursor.close()
+            conexao.close()
