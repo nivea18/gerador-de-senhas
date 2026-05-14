@@ -10,3 +10,6 @@ frontend/dist/
 # Sistema
 .DS_Store
 .env
+
+# VSCode
+.vscode/
