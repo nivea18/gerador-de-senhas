@@ -1,69 +1,69 @@
+import { useState } from 'react';
+import axios from 'axios'; // conectar o python
+import './App.css'; // import do cdd
+
 function App() {
+  
+  const [senha, setSenha] = useState("SuaSenhaAqui");
+
   return (
-    <div>
+    <div className="container-gerador">
 
-      <h1>Gerador de Senhas</h1>
+      <h1 className="titulo-principal">Gerador de Senhas</h1>
 
-      <p>
+      <p className="descricao">
         Gere senhas seguras para o usuário.
       </p>
 
-      <hr />
+      <hr className="divisor" />
 
-      <h2>Configurações</h2>
+      <h2 className="subtitulo">Configurações</h2>
 
-      <br />
+      <div className="campo-grupo">
+        <label className="label-config">Tamanho da senha:</label>
+        <input
+          type="number"
+          className="input-numero"
+          placeholder="Mínimo 6 e máximo 8"
+        />
+      </div>
 
-      <label>Tamanho da senha:</label>
+      <div className="opcoes-grupo">
+        <label className="checkbox-label">
+          <input type="checkbox" className="checkbox-input" />
+          Incluir letras maiúsculas
+        </label>
 
-      <br /><br />
+        <label className="checkbox-label">
+          <input type="checkbox" className="checkbox-input" />
+          Incluir números
+        </label>
 
-      <input
-        type="number"
-        placeholder="Mínimo 6 e máximo 8"
-      />
+        <label className="checkbox-label">
+          <input type="checkbox" className="checkbox-input" />
+          Incluir caracteres especiais
+        </label>
+      </div>
 
-      <br /><br />
-
-      <label>
-        <input type="checkbox" />
-        Incluir letras maiúsculas
-      </label>
-
-      <br /><br />
-
-      <label>
-        <input type="checkbox" />
-        Incluir números
-      </label>
-
-      <br /><br />
-
-      <label>
-        <input type="checkbox" />
-        Incluir caracteres especiais
-      </label>
-
-      <br /><br />
-
-      <button>
+      <button className="botao-gerar">
         Gerar Senha
       </button>
 
-      <hr />
+      <hr className="divisor" />
 
-      <h2>Senha Gerada</h2>
+      <h2 className="subtitulo">Senha Gerada</h2>
 
-      <br />
-
-      <input
-        type="text"
-        value="Abc@123"
-        readOnly
-      />
+      <div className="resultado-container">
+        <input
+          type="text"
+          className="input-resultado"
+          value={senha} 
+          readOnly
+        />
+      </div>
 
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
