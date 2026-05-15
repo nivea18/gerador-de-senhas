@@ -3,12 +3,12 @@
 from config.database import conectar
 from mysql.connector import Error
 
-def search_user_for_email(email):
+def search_user_for_email(EMAIL):
     conexao, cursor = conectar()
     if conexao and cursor:
         try:
             sql = "SELECT * FROM usuarios WHERE email = %s"
-            cursor.execute(sql, (email, ))
+            cursor.execute(sql, (EMAIL, ))
 
             usuario = cursor.fetchone()
 
@@ -28,12 +28,12 @@ def search_user_for_email(email):
             cursor.close()
             conexao.close()
 
-def search_user_for_id(id):
+def search_user_for_id(ID_USER):
     conexao, cursor = conectar()
     if conexao and cursor:
         try:
             sql = "SELECT * FROM usuarios WHERE ID_USER_PK = %s"
-            cursor.execute(sql, (id, ))
+            cursor.execute(sql, (ID_USER, ))
 
             usuario = cursor.fetchone()
 
@@ -53,12 +53,12 @@ def search_user_for_id(id):
             cursor.close()
             conexao.close()
 
-def create_new_user(dados):
+def create_new_user(NOME, EMAIL, SENHA_HASH):
     conexao, cursor = conectar()
     if conexao and cursor:
         try:
             sql = "INSERT INTO usuarios (NOME, EMAIL, SENHA_HASH) VALUES (%s, %s, %s)"
-            cursor.execute(sql, (dados["nome"], dados["email"], dados["senha_hash"]))
+            cursor.execute(sql, (NOME, EMAIL, SENHA_HASH))
             conexao.commit()
 
             print(f"User criado com sucesso. ID: {cursor.lastrowid}")
@@ -76,19 +76,19 @@ def create_new_user(dados):
             cursor.close()
             conexao.close()
 
-def delete_user(id):
+def delete_user(ID_USER):
     conexao, cursor = conectar()
     if conexao and cursor:
         try:
             sql = "DELETE FROM usuarios WHERE ID_USER_PK = %s"
-            cursor.execute(sql, (id, ))
+            cursor.execute(sql, (ID_USER, ))
             conexao.commit()
 
             print(f"Linhas afetadas: {cursor.rowcount}")
 
             return {
                 'success': True if cursor.rowcount > 0 else False,
-                'message': f"Usuário com ID {id} deletado com sucesso." if cursor.rowcount > 0 else f"Nenhum usuário encontrado com ID {id}. Nada foi deletado"
+                'message': f"Usuário com ID {ID_USER} deletado com sucesso." if cursor.rowcount > 0 else f"Nenhum usuário encontrado com ID {id}. Nada foi deletado"
             }
         
         except Error as erro:
@@ -101,12 +101,12 @@ def delete_user(id):
             cursor.close()
             conexao.close()
 
-def update_username(id, nome):
+def update_username(ID_USER, NOME):
     conexao, cursor = conectar()
     if conexao and cursor:
         try:
             sql = "UPDATE usuarios SET NOME=%s WHERE ID_USER_PK = %s "
-            cursor.execute(sql, (nome, id ))
+            cursor.execute(sql, (NOME, ID_USER ))
             conexao.commit()
 
             print(f"Linhas afetadas: {cursor.rowcount}")

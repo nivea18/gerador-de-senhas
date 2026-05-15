@@ -99,10 +99,3 @@ def search_all_passwords_in_cofre(ID_COFRE):
             cursor.close()
             conexao.close()
 
-
-
-
-""" SELECT cofres.*, cofres_permissoes.* FROM cofres
-JOIN cofres_permissoes
-ON cofres.ID_COFRE_PK = cofres_permissoes.ID_COFRE_FK
-WHERE cofres_permissoes.    =1 """
