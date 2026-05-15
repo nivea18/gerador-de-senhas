@@ -1,0 +1,17 @@
+> Routes:
+Responsáveis por definir os caminhos da API e direcionar as requisições para os controllers corretos.
+
+> Controllers:
+Recebem as requisições das rotas, processam os dados iniciais e chamam os services responsáveis pela lógica de negócio.
+
+> Services:
+Contêm a lógica principal do sistema, separando a parte funcional da aplicação do controle de requisições.
+
+> Models:
+Responsáveis pela interação com o banco de dados (SQL), como consultas, inserções, atualizações e deleções.
+
+> Middlewares:
+Interceptam requisições para executar funções antes de chegar ao controller, como autenticação e validação.
+
+> Utils:
+Funções auxiliares reutilizáveis no sistema.
