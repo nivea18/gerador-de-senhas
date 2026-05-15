@@ -1,25 +1,25 @@
  #Aqui vai ficar todos os models referente ao COFRE
-
+import json
 from config.database import conectar
 from mysql.connector import Error
 from models.cofres_permissoes_model import create_new_permission
 
-def create_new_cofre(dados):
+def create_new_cofre(ID_USER, NOME, DESCRICAO):
     conexao, cursor = conectar()
     if conexao and cursor:
         try:
             sql = "INSERT INTO cofres (NOME, DESCRICAO) VALUES (%s, %s)"
-            cursor.execute(sql, (dados["nome"], dados["descricao"]))
+            cursor.execute(sql, (NOME, DESCRICAO))
             conexao.commit()
            
             print(f"Cofre criado com sucesso. ID: {cursor.lastrowid}")
 
-            create_permission = create_new_permission(cursor.lastrowid, dados['id_user'], "admin")
+            create_permission = create_new_permission(cursor.lastrowid, ID_USER, "admin")
             print(create_permission)
 
             return {
                 'success': True, 
-                'message': f"Cofre {dados['nome']} com ID {cursor.lastrowid} criado com sucesso"
+                'message': f"Cofre {NOME} com ID {cursor.lastrowid} criado com sucesso"
             }
         except Error as erro:
             return {
@@ -82,11 +82,14 @@ def search_all_passwords_in_cofre(ID_COFRE):
                 """
             cursor.execute(sql, (ID_COFRE, ))
 
-            cofre = cursor.fetchone()     
+            cofre = cursor.fetchone()   
+            cofre['SENHAS'] = json.loads(cofre['SENHAS'])
+
             return {
                 'success': cofre is not None,
                 'message': f"Cofre encontrado" if cofre else f"Cofre não encontrado",
-                'data': cofre                
+                'data': cofre,
+                               
             }
         
         except Error as erro:
