@@ -17,8 +17,7 @@ function App() {
   // função que conecta com a API flask ou fastAPI
   const lidarComGerarSenha = async () => {
     try {
-      // Faz uma requisição POST enviando as opções no corpo (body) em JSON
-      // O Axios cuida dos Headers implicitamente (Content-Type: application/json)
+      // faz uma requisição POST enviando as opções do body em JSON
       const resposta = await axios.post('http://localhost:5000/gerar-senha', {
         tamanho: Number(tamanho),
         maiusculas: maiusculas,
