@@ -56,11 +56,12 @@ def delete_cofre(ID_COFRE):
             cursor.close()
             conexao.close()
 
+#Retorna os dados do cofre junto com as senhas que tem nele.
 def search_all_passwords_in_cofre(ID_COFRE):
     conexao, cursor = conectar()
     if conexao and cursor:
         try:
-            sql = """SELECT cofres.*, 
+            sql = """SELECT cofres.*, COUNT(senhas.ID_SENHA_PK) AS TOTAL_SENHAS,
                             CONCAT(
                                 '[',
                                     GROUP_CONCAT(
@@ -73,6 +74,7 @@ def search_all_passwords_in_cofre(ID_COFRE):
                                     ),
                                 ']'
                             ) AS SENHAS
+                            
                         FROM `cofres`
 
                         JOIN senhas 
@@ -101,4 +103,3 @@ def search_all_passwords_in_cofre(ID_COFRE):
         finally:
             cursor.close()
             conexao.close()
-

@@ -51,6 +51,7 @@ def delete_permission(ID_COFRE, ID_USER):
             cursor.close()
             conexao.close()
 
+#Retorna a lista de cofres que o usuario tem permissão
 def search_cofres_with_permission(ID_USER):
     conexao, cursor = conectar()
     if conexao and cursor:
@@ -63,7 +64,8 @@ def search_cofres_with_permission(ID_USER):
                                     'ID_COFRE_PK', cofres.ID_COFRE_PK,
                                     'NOME', cofres.NOME,
                                     'DESCRICAO', cofres.DESCRICAO,
-                                    'CREATED_AT', cofres.CREATED_AT
+                                    'CREATED_AT', cofres.CREATED_AT,
+                                    'TOTAL_SENHAS', ( SELECT COUNT(*) AS COUNT_SENHAS FROM senhas WHERE senhas.ID_COFRE_FK = cofres.ID_COFRE_PK )
                                 )
                             ),
                             ']'
@@ -94,3 +96,30 @@ def search_cofres_with_permission(ID_USER):
         finally:
             cursor.close()
             conexao.close()
+
+#Verifica se tem permissão no cofre
+def check_permission_for_cofre(ID_USER, ID_COFRE):
+    conexao, cursor = conectar()
+    if conexao and cursor:
+        try:
+            sql = "SELECT * FROM cofres_permissoes WHERE ID_USUARIO_FK=%s AND ID_COFRE_FK=%s"
+            cursor.execute(sql, (ID_USER, ID_COFRE))
+
+            permissao = cursor.fetchone()
+            cursor.fetchall()
+
+            return {
+                'success': permissao is not None,
+                'message': f"Permissão encontrado" if permissao else f"Permissão não encontrado",
+                'data': permissao                
+            }
+        
+        except Error as erro:
+            return {
+                'success': False,
+                'message': f"Houve um error ao realizar a Query: {erro}",              
+            }
+        
+        finally:
+            cursor.close()
+            conexao.close() 

@@ -3,56 +3,6 @@
 from config.database import conectar
 from mysql.connector import Error
 
-def search_user_for_email(EMAIL):
-    conexao, cursor = conectar()
-    if conexao and cursor:
-        try:
-            sql = "SELECT * FROM usuarios WHERE email = %s"
-            cursor.execute(sql, (EMAIL, ))
-
-            usuario = cursor.fetchone()
-
-            return {
-                'success': usuario is not None,
-                'message': f"Usuário encontrado" if usuario else f"Usuário não encontrado",
-                'data': usuario                
-            }
-            
-        except Error as erro:
-            return {
-                'success': False,
-                'message': f"Houve um error ao realizar a Query: {erro}",              
-            }
-        
-        finally:
-            cursor.close()
-            conexao.close()
-
-def search_user_for_id(ID_USER):
-    conexao, cursor = conectar()
-    if conexao and cursor:
-        try:
-            sql = "SELECT * FROM usuarios WHERE ID_USER_PK = %s"
-            cursor.execute(sql, (ID_USER, ))
-
-            usuario = cursor.fetchone()
-
-            return {
-                'success': usuario is not None,
-                'message': f"Usuário encontrado" if usuario else f"Usuário não encontrado",
-                'data': usuario                
-            }
-        
-        except Error as erro:
-            return {
-                'success': False,
-                'message': f"Houve um error ao realizar a Query: {erro}",              
-            }
-        
-        finally:
-            cursor.close()
-            conexao.close()
-
 def create_new_user(NOME, EMAIL, SENHA_HASH):
     conexao, cursor = conectar()
     if conexao and cursor:
@@ -121,6 +71,56 @@ def update_username(ID_USER, NOME):
                     'success': False, 
                     'message': f"Houve um error ao realizar a Query: {erro}"
                 }
+        
+        finally:
+            cursor.close()
+            conexao.close()
+
+def search_user_for_email(EMAIL):
+    conexao, cursor = conectar()
+    if conexao and cursor:
+        try:
+            sql = "SELECT * FROM usuarios WHERE email = %s"
+            cursor.execute(sql, (EMAIL, ))
+
+            usuario = cursor.fetchone()
+
+            return {
+                'success': usuario is not None,
+                'message': f"Usuário encontrado" if usuario else f"Usuário não encontrado",
+                'data': usuario                
+            }
+            
+        except Error as erro:
+            return {
+                'success': False,
+                'message': f"Houve um error ao realizar a Query: {erro}",              
+            }
+        
+        finally:
+            cursor.close()
+            conexao.close()
+
+def search_user_for_id(ID_USER):
+    conexao, cursor = conectar()
+    if conexao and cursor:
+        try:
+            sql = "SELECT * FROM usuarios WHERE ID_USER_PK = %s"
+            cursor.execute(sql, (ID_USER, ))
+
+            usuario = cursor.fetchone()
+
+            return {
+                'success': usuario is not None,
+                'message': f"Usuário encontrado" if usuario else f"Usuário não encontrado",
+                'data': usuario                
+            }
+        
+        except Error as erro:
+            return {
+                'success': False,
+                'message': f"Houve um error ao realizar a Query: {erro}",              
+            }
         
         finally:
             cursor.close()
