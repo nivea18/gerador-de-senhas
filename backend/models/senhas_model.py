@@ -25,31 +25,6 @@ def create_password(ID_COFRE, NOME, SENHA_GERADA):
             cursor.close()
             conexao.close()    
 
-def search_password_in_cofre(ID_COFRE):
-    conexao, cursor = conectar()
-    if conexao and cursor:
-
-        try:
-            sql = "SELECT * FROM senhas WHERE ID_COFRE_FK = %s"
-            cursor.execute(sql, (ID_COFRE, ))
-
-            senhas = cursor.fetchall()
-
-            return {
-                'success': senhas is not None,
-                'message': f"Senhas encontradas" if senhas else f"Senhas não encontradas",
-                'data': senhas                
-            }
-        except Error as erro:
-            return {
-                'success': False,
-                'message': f"Houve um error ao realizar a Query: {erro}",              
-            }
-        
-        finally:
-            cursor.close()
-            conexao.close()  
-
 def delete_password(ID_SENHA_PK):
     conexao, cursor = conectar()
     if conexao and cursor:
